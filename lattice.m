@@ -254,8 +254,8 @@ BitCompleteSets := function(Inc, DL)
       n := #Subs;
       Z := Y diff Checked;
       Checked join:= Y;
-      printf "Current Number of Submodules: %o\n", #Subs;
-      printf "Completing %o Sets\n", #Z;
+      //printf "Current Number of Submodules: %o\n", #Subs;
+      //printf "Completing %o Sets\n", #Z;
       nump+:=#Z;
       
       for y in Z do
@@ -286,54 +286,8 @@ BitCompleteSets := function(Inc, DL)
    SeqSubs := [Intseq(S, 2):S in Subs];
    SeqSubs := [S cat [0:i in [1..NL-#S]]:S in SeqSubs];
    SetSubs := [{i:i in {1..NL}|S[i] eq 1}: S in SeqSubs];
-   nump;
    return SetSubs;
    
-end function;
-
-AltCompleteSets := function(Inc, DL)
-   print "Calculating Submodules";
-   NL := Nrows(Inc);
-   Cycs := {@{j:j in [1..NL] | Eltseq(Inc[i])[j] eq 1}: i in [1..NL]@};
-   Subs := {x:x in Cycs};
-   NewSubs := Subs;
-   DLinesByn := [[j: j -> D in DL | i in D]: i in [1..NL]];
-   Checked := Cycs;
-   
-   cont := true;
-   while cont do
-      Y := {x1 join x2: x1 in Cycs, x2 in NewSubs};
-      NewSubs := {};
-      n := #Subs;
-      Z := Y diff Checked;
-      Checked := Y;
-      printf "Current Number of Submodules: %o\n", #Subs;
-      printf "Completing %o Sets\n", #Z;
-      for y in Z do
-         z := y;
-         comp := true;
-         while comp do
-            comp := false;
-            zDL := &cat [DLinesByn[i]: i in z];
-            for D in Set(zDL) do
-               Exclude(~zDL, D);
-            end for;
-            zDL := {DL[i]: i in zDL};
-            add := &join zDL diff z;
-            for m in add do
-               comp := true;
-               z := z join Cycs[m];
-            end for;
-         end while;
-         if not z in Subs then
-            Include(~Subs, z);
-            Include(~NewSubs, z);
-         end if;
-      end for;
-      
-      if n eq #Subs then cont := false; end if;
-   end while;
-   return Subs;
 end function;
 
 // Main function 
@@ -401,15 +355,19 @@ function MySubmodules(M: ReturnMods := false, Bit := true, LatticeCyclics:=false
    
    Subs := Bit eq true select BitCompleteSets(Inc, DL) else CompleteSets(Inc, DL);
    
+   
    if ReturnMods then
       SubM := {};
       for S in Subs do
          Include(~SubM, &+[LocalSubs[j]:j in S]);
       end for;
       Include(~SubM, sub<M | 0>);
-      return SubM, Subs, LocalSubs, CondMods, LocalSubList, CyclicSubList, DL;
+      return SubM, LocalSubs;
    end if;
-   return Subs, LocalSubs, CondMods, LocalSubList, CyclicSubList, DL;
+   
+   Append(~Subs,{});
+   
+   return Subs, LocalSubs;
 end function;
 
 // Example, Permutation module for the edge group of the Cube graph
