@@ -2,6 +2,7 @@
 We have developed Magma implementations of some algorithms for finite dimensional KG-modules based on the following papers:
 
 Meataxe:
+
 Richard A. Parker. The computer calculation of modular characters (the MeatAxe). In Computational group theory (Durham, 1982). pp. 267 - 274 Academic Press, London, 1984.
 
 [HR94] Derek F. Holt and Sarah Rees. Testing modules for irreducibility. J. Austral. Math. Soc. Ser. A, 57(1):1{16, 1994.
@@ -9,9 +10,10 @@ Richard A. Parker. The computer calculation of modular characters (the MeatAxe).
 [IL00] Gabor Ivanyos and Klaus Lux. Treating the exceptional cases of the MeatAxe. Experiment. Math., 9(3):373{381, 2000.
 
 Submodules:
+
 [LMR94] Klaus Lux, Jurgen Muller, and Michael Ringe. Peakword condensation and submodule lattices: an application of the MEAT-AXE. J. Symbolic Comput., 17(6):529{544, 1994.
 
-Simon Goodwin and Eamonn O'Brien April 2022
+Simon Goodwin April 2022
 
 =======================================================
 
@@ -37,7 +39,7 @@ Additionally returns number of iterations.
 
 =======================================================
 
-MeatIL:= function(M: NumberMultiplications := 25, limit := 100)
+MeatIL(M: NumberMultiplications := 25, limit := 100)
 
 The Holt-Rees Meataxe with the Ivanyos-Lux extension [IL00]
 Same options as Meat
@@ -54,7 +56,7 @@ Additionally returns number of iterations.
 
 =======================================================
 
-MeatLG:= function(M: NumberMultiplications := 25, limit := 100, Endlimit := 10)
+MeatLG(M: NumberMultiplications := 25, limit := 100, Endlimit := 10)
 
 The Holt-Rees Meataxe with an extension proposed by Leedham-Green.
 
@@ -93,7 +95,7 @@ Given a module M, we produce all submodules of M.
 
 If ReturnMods is true, these are returned as submodules of M. Otherwise, the submodules of M are returned as sets of integers.
 
-To convert these sets to modules, we use the Benson Conway Theorem, the algorithm returns as a second output all the local submodules of M, Loc.
+To convert these sets to modules, we use the Benson Conway Theorem. MySubmodules returns as a second output Loc, all of the local submodules of M.
 
 The module corresponding to the set {n_1,..., n_k} is Loc[n_1]+...+Loc[n_k]. This can be calculated by &+[LocalSubs[j]:j in S]. Unless S={}, in which case, the corresponding module is 0.
 
