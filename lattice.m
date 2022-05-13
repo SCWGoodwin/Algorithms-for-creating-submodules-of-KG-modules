@@ -3,8 +3,7 @@
 // The matrix N is the uncondensation function from U to M.
 
 PeakWordCondense := function(pkwd, M, A)
-   G:=Group(M);
-   f:=Representation(M);
+   G:=ActionGroup(M);
    n := Dimension(M);
    F := BaseRing(M);
    V := VectorSpace(M);
@@ -25,7 +24,7 @@ PeakWordCondense := function(pkwd, M, A)
    N := (m1*pi)^-1*m1;
    gens := [A.i: i in [1..Ngens(A)]];
    for i in [1..10] do
-      Append(~gens,A!f(Random(G:Short:=true)));
+      Append(~gens,A!Random(G:Short:=true));
    end for;
    eAe := sub<MatrixAlgebra(F, Dimension(K)) | [N*a*pi: a in gens]>;
    U := RModule(eAe);
