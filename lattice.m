@@ -22,9 +22,9 @@ PeakWordCondense := function(pkwd, M, A)
    pi := Matrix([p(V.i):i in [1 .. n]]);
    m1 := BasisMatrix(K);
    N := (m1*pi)^-1*m1;
-   gens := [A.i: i in [1..Ngens(A)]];
+   gens := [Generic (A) | A.i: i in [1..Ngens(A)]];
    for i in [1..10] do
-      Append(~gens,A!Random(G:Short:=true));
+      Append(~gens, Random(G:Short:=true));
    end for;
    eAe := sub<MatrixAlgebra(F, Dimension(K)) | [N*a*pi: a in gens]>;
    U := RModule(eAe);
